@@ -27,7 +27,7 @@ bool EXPECT_EQ(bool exp, const char* testname = "default testname") {
         tests_passed++;
         return true;
     } else {
-        std::cout << FAIL_COLOR << "[FAILED] " << testname << FAIL_COLOR << std::endl;
+        std::cout << FAIL_COLOR << "[FAILED] " << testname << RESET_COLOR << std::endl;
         ofs << "[FAILED] " << testname << std::endl;
         return false;
     }
