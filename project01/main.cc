@@ -12,17 +12,19 @@ bit_t one(1);
 
 void initialize() {
     ofs.open("result.txt");
-    std::cout << "The result of the test is written to result.txt." << std::endl;
+    std::cout << "The result of the test is also written to result.txt." << std::endl;
 }
 
 bool EXPECT_EQ(bool exp, const char* testname = "default testname") {
     tests_run++;
     if (exp) {
-        ofs << "ok " << testname << std::endl;
+        std::cout << "[PASSED] " << testname << std::endl;
+        ofs << "[PASSED] " << testname << std::endl;
         tests_passed++;
         return true;
     } else {
-        ofs << "wrong answer on " << testname << std::endl;
+        std::cout << "[FAILED] " << testname << std::endl;
+        ofs << "[FAILED] " << testname << std::endl;
         return false;
     }
 }
@@ -301,8 +303,8 @@ void DMux8WayTest(){
 }
 
 void print_scores(){
-    std::cout << "Tests passed: " << tests_passed << " / " << tests_run << std::endl;
-    ofs << "Tests passed: " << tests_passed << " / " << tests_run << std::endl;
+    std::cout << "[RESULT] Tests passed: " << tests_passed << " / " << tests_run << std::endl;
+    ofs << "[RESULT] Tests passed: " << tests_passed << " / " << tests_run << std::endl;
 }
 
 int main(int argc, char const* argv[])
