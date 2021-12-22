@@ -2,6 +2,10 @@
 #include <iostream>
 #include <fstream>
 
+#define PASS_COLOR "\033[1;32m"
+#define FAIL_COLOR "\033[1;31m"
+#define RESET_COLOR "\033[0m"
+
 std::ofstream ofs;
 
 int tests_passed = 0;
@@ -18,12 +22,12 @@ void initialize() {
 bool EXPECT_EQ(bool exp, const char* testname = "default testname") {
     tests_run++;
     if (exp) {
-        std::cout << "[PASSED] " << testname << std::endl;
+        std::cout << PASS_COLOR << "[PASSED] " << testname << RESET_COLOR << std::endl;
         ofs << "[PASSED] " << testname << std::endl;
         tests_passed++;
         return true;
     } else {
-        std::cout << "[FAILED] " << testname << std::endl;
+        std::cout << FAIL_COLOR << "[FAILED] " << testname << RESET_COLOR << std::endl;
         ofs << "[FAILED] " << testname << std::endl;
         return false;
     }
