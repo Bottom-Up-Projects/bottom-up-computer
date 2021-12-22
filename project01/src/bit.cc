@@ -94,26 +94,86 @@ bit_t Nand(bit_t a, bit_t b)
 }
 
 // You need to implement the following functions:
+
+/*
+a | not a
+---------
+0 | 1
+1 | 0
+*/
 bit_t Not(bit_t in)
 {
-    return bit_t();
+    return Nand(in, in);
 }
+
+/*
+a | b | a & b
+-------------
+0 | 0 | 0
+0 | 1 | 0
+1 | 0 | 0
+1 | 1 | 1
+>> a * b
+*/
 bit_t And(bit_t a, bit_t b)
 {
-    return bit_t();
+    return Not(Nand(a, b));
 }
+
+/*
+a | b | a || b
+---------------
+0 | 0 | 0
+0 | 1 | 1
+1 | 0 | 1
+1 | 1 | 1
+>> ~(~a * ~b)
+*/
 bit_t Or(bit_t a, bit_t b)
 {
-    return bit_t();
+    return Not(And(Not(a), Not(b)));
 }
+
+/*
+a | b | a ^ b
+-------------
+0 | 0 | 0
+0 | 1 | 1
+1 | 0 | 1
+1 | 1 | 0
+>> ~a * b + a * ~b
+*/
 bit_t Xor(bit_t a, bit_t b)
 {
-    return bit_t();
+    return Or(And(Not(a), b), And(a, Not(b)));
 }
+
+/*
+a | b | sel | Mux(a, b, sel)
+-----------------------------
+0 | 0 | 0 | 0
+0 | 0 | 1 | 0
+0 | 1 | 0 | 0
+0 | 1 | 1 | 1
+1 | 0 | 0 | 1
+1 | 0 | 1 | 0
+1 | 1 | 0 | 1
+1 | 1 | 1 | 1
+>> a * ~sel + b * sel
+*/
 bit_t Mux(bit_t a, bit_t b, bit_t sel)
 {
-    return bit_t();
+    return Or(And(Not(sel), a), And(sel, b));
 }
+
+/*
+in | sel | Demux(in, sel)
+-------------------------
+0 | 0 | (0, 0)
+0 | 1 | (0, 0)
+1 | 0 | (1, 0)
+1 | 1 | (0, 1)
+*/
 std::tuple<bit_t, bit_t> DMux(bit_t in, bit_t sel)
 {
     return std::make_tuple(bit_t(), bit_t());
