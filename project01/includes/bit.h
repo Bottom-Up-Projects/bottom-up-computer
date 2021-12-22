@@ -9,16 +9,23 @@ struct bit_t {
     bit_t(int bit);
 
     bit_t operator=(int bit);
+    bool operator==(bit_t other);
+    bool operator==(int other);
 };
 
-template <unsigned int N = 1>
+template <unsigned int N>
 struct bit_array_t {
     bit_t bit[N];
-    bit_array_t();
+    bit_array_t<N>();
+    bit_array_t<N>(unsigned int bits);
 
     void set(unsigned int idx);
     void clear(unsigned int idx);
     bool test(unsigned int idx);
+
+    bit_array_t<N> operator=(unsigned int bits);
+    bool operator==(bit_array_t<N> other);
+    bool operator==(unsigned int other);
 };
 
 typedef bit_array_t<2> bit2_t;
@@ -26,8 +33,9 @@ typedef bit_array_t<4> bit4_t;
 typedef bit_array_t<8> bit8_t;
 typedef bit_array_t<16> bit16_t;
 typedef bit_array_t<32> bit32_t;
-typedef bit_array_t<64> bit64_t;
 
+extern const bit_t ZERO;
+extern const bit_t ONE;
 
 bit_t Nand(bit_t a, bit_t b);
 bit_t Not(bit_t in);
@@ -35,7 +43,7 @@ bit_t And(bit_t a, bit_t b);
 bit_t Or(bit_t a, bit_t b);
 bit_t Xor(bit_t a, bit_t b);
 bit_t Mux(bit_t a, bit_t b, bit_t sel);
-bit_t DMux(bit_t in, bit_t sel);
+std::tuple<bit_t, bit_t> DMux(bit_t in, bit_t sel);
 
 bit16_t Not16(bit16_t in);
 bit16_t And16(bit16_t a, bit16_t b);

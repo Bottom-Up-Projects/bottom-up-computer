@@ -14,7 +14,7 @@ all: main
 
 main: main.cc $(OBJECTS)
 	$(CXX) $(CFLAGS) -c $< -o $@.o
-	$(CXX) $(CFLAGS) -o $@ $@.o $(OBJECTS)
+	$(CXX) $(CFLAGS) $(OBJECTS) $@.o -o $@
 	rm -f $(OBJECTS) $@.o
 
 clean: 

@@ -7,10 +7,26 @@ bit_t bit_t::operator=(int bit) {
     return *this;
 }
 
+bool bit_t::operator==(bit_t other){
+    return bit == other.bit;
+}
+
+bool bit_t::operator==(int other){
+    return bit == (other&1);
+}
+
 template <unsigned int N>
 bit_array_t<N>::bit_array_t() {
     for (unsigned int i = 0; i < N; i++) {
         bit[i] = 0;
+    }
+}
+
+template <unsigned int N>
+bit_array_t<N>::bit_array_t(unsigned int bits) {
+    for (unsigned int i = 0; i < N; i++) {
+        bit[i] = bits&1;
+        bits >>= 1;
     }
 }
 
@@ -29,8 +45,48 @@ void bit_array_t<N>::clear(unsigned int idx)
 template <unsigned int N>
 bool bit_array_t<N>::test(unsigned int idx)
 {
-    return bit[idx];
+    return bit[idx] == 1;
 }
+
+template <unsigned int N>
+bit_array_t<N> bit_array_t<N>::operator=(unsigned int bits)
+{
+    for (unsigned int i = 0; i < N; i++) {
+        bit[i] = bits&1;
+        bits >>= 1;
+    }
+    return *this;
+}
+
+template <unsigned int N>
+bool bit_array_t<N>::operator==(bit_array_t<N> other) {
+    for (unsigned int i = 0; i < N; i++) {
+        if (!(bit[i] == other.bit[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <unsigned int N>
+bool bit_array_t<N>::operator==(unsigned int other) {
+    for (unsigned int i = 0; i < N; i++) {
+        if (bit[i].bit != (other&1)) {
+            return false;
+        }
+        other >>= 1;
+    }
+    return true;
+}
+
+const bit_t ZERO(0);
+const bit_t ONE(1);
+
+template class bit_array_t<2>;
+template class bit_array_t<4>;
+template class bit_array_t<8>;
+template class bit_array_t<16>;
+template class bit_array_t<32>;
 
 bit_t Nand(bit_t a, bit_t b)
 {
@@ -58,9 +114,9 @@ bit_t Mux(bit_t a, bit_t b, bit_t sel)
 {
     return bit_t();
 }
-bit_t DMux(bit_t in, bit_t sel)
+std::tuple<bit_t, bit_t> DMux(bit_t in, bit_t sel)
 {
-    return bit_t();
+    return std::make_tuple(bit_t(), bit_t());
 }
 
 bit16_t Not16(bit16_t in)
