@@ -1,18 +1,18 @@
 #include "bit.h"
 
 bit_t::bit_t() : bit(0) {}
-bit_t::bit_t(int bit) : bit(bit&1) {}
+bit_t::bit_t(int bit) : bit(bit & 1) {}
 bit_t bit_t::operator=(int bit) {
-    this->bit = bit&1;
+    this->bit = bit & 1;
     return *this;
 }
 
-bool bit_t::operator==(bit_t other){
+bool bit_t::operator==(bit_t other) {
     return bit == other.bit;
 }
 
-bool bit_t::operator==(int other){
-    return bit == (other&1);
+bool bit_t::operator==(int other) {
+    return bit == (other & 1);
 }
 
 template <unsigned int N>
@@ -25,7 +25,7 @@ bit_array_t<N>::bit_array_t() {
 template <unsigned int N>
 bit_array_t<N>::bit_array_t(unsigned int bits) {
     for (unsigned int i = 0; i < N; i++) {
-        bit[i] = bits&1;
+        bit[i] = bits & 1;
         bits >>= 1;
     }
 }
@@ -52,7 +52,7 @@ template <unsigned int N>
 bit_array_t<N> bit_array_t<N>::operator=(unsigned int bits)
 {
     for (unsigned int i = 0; i < N; i++) {
-        bit[i] = bits&1;
+        bit[i] = bits & 1;
         bits >>= 1;
     }
     return *this;
@@ -71,7 +71,7 @@ bool bit_array_t<N>::operator==(bit_array_t<N> other) {
 template <unsigned int N>
 bool bit_array_t<N>::operator==(unsigned int other) {
     for (unsigned int i = 0; i < N; i++) {
-        if (bit[i].bit != (other&1)) {
+        if (bit[i].bit != (other & 1)) {
             return false;
         }
         other >>= 1;
