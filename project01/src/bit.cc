@@ -9,7 +9,7 @@ bit_t bit_t::operator=(int bit) {
 
 template <unsigned int N>
 bit_array_t<N>::bit_array_t() {
-    for (int i = 0; i < N; i++) {
+    for (unsigned int i = 0; i < N; i++) {
         bit[i] = 0;
     }
 }
